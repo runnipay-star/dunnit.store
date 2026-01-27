@@ -1,0 +1,326 @@
+
+export interface UserSession {
+  id: string;
+  email: string;
+}
+
+export enum PageTone {
+  PROFESSIONAL = 'Professional',
+  URGENT = 'Urgent/Hype',
+  FRIENDLY = 'Friendly/Personal',
+  LUXURY = 'Luxury'
+}
+
+export type TemplateId = 'classic' | 'modern-split' | 'luxury' | 'advertorial' | 'high-impact' | 'gadget-cod' | 'shopify-clean' | 'premium-brand' | 'mobile-optimized';
+
+export type AIImageStyle = 'lifestyle' | 'technical' | 'informative';
+
+export interface SiteConfig {
+  siteName: string;
+  footerText: string;
+  storageBucketName?: string; // NEW: Custom bucket name
+  phone?: string; // NEW
+  vatNumber?: string; // NEW
+  email?: string; // NEW
+  browserTitle?: string; // NEW: Browser Tab Title (ex: A.T)
+  faviconUrl?: string; // NEW: Favicon via URL
+  adminPanelName?: string; // NEW: Admin Panel Branding (ex: Agdid Admin)
+}
+
+export interface ProductDetails {
+  name: string;
+  niche: string;
+  description: string;
+  targetAudience: string;
+  tone: PageTone;
+  language: string; // Selected language for generation
+  image?: string; // Legacy support for single image
+  images?: string[]; // Array of images
+  featureCount?: number; // Number of paragraphs/features to generate
+  selectedImageStyles?: AIImageStyle[]; // NEW: Preferred styles for AI image generation
+}
+
+export interface FormFieldConfig {
+  id: 'name' | 'phone' | 'email' | 'address' | 'address_number' | 'city' | 'province' | 'cap' | 'notes';
+  label: string;
+  enabled: boolean;
+  required: boolean;
+  type: 'text' | 'tel' | 'email' | 'textarea';
+  width?: number; // Grid width from 1 to 12
+  validationType?: 'none' | 'numeric' | 'alpha' | 'alphanumeric'; // NEW: Input restriction
+}
+
+export interface Testimonial {
+  name: string;
+  title?: string; // Specific title for the review
+  text: string;
+  role: string;
+  rating?: number;
+  date?: string; // Date of the review
+  image?: string; // Legacy image field
+  images?: string[]; // NEW: Support for multiple images via URL
+}
+
+export interface TypographyConfig {
+  fontFamily: 'sans' | 'serif' | 'mono';
+  h1Size: 'sm' | 'md' | 'lg' | 'xl' | '2xl'; 
+  h2Size: 'sm' | 'md' | 'lg' | 'xl';
+  bodySize: 'sm' | 'md' | 'lg';
+}
+
+export interface UiTranslation {
+    reviews: string;
+    offer: string;
+    onlyLeft: string; // "Only {x} left" -> "Solo {x} rimasti"
+    secure: string;
+    returns: string;
+    original: string;
+    express: string;
+    warranty: string;
+    checkoutHeader: string;
+    paymentMethod: string;
+    cod: string; // Cash on Delivery
+    card: string; // Credit Card label
+    shippingInfo: string;
+    completeOrder: string;
+    orderReceived: string;
+    orderReceivedMsg: string;
+    techDesign: string;
+    discountLabel: string; // "o" for offer or "sconto"
+    certified: string; // For reviews
+    currencyPos: 'before' | 'after';
+    legalDisclaimer: string; // The full legal text translated
+    privacyPolicy: string;
+    termsConditions: string;
+    cookiePolicy: string;
+    rightsReserved: string;
+    generatedPageNote: string;
+    // Card Error Flow
+    cardErrorTitle: string;
+    cardErrorMsg: string;
+    switchToCod: string;
+    mostPopular: string; // Badge "Most chosen"
+    giveUpOffer: string;
+    confirmCod: string; // Button "Confirm Cash on Delivery"
+    // Thank You Page Personalization
+    thankYouTitle: string; // "Grazie {name}!"
+    thankYouMsg: string; // "Ti chiameremo al {phone} per confermare."
+    backToShop: string;
+    // Social Proof Badge
+    socialProof: string; // "e altre {x} persone hanno acquistato"
+    shippingInsurance: string; // NEW
+    gadgetLabel: string; // NEW GADGET LABEL
+    shippingInsuranceDescription: string;
+    gadgetDescription: string;
+    freeLabel: string;
+    // NEW: Order Summary keys
+    summaryProduct: string;
+    summaryShipping: string;
+    summaryInsurance: string;
+    summaryGadget: string;
+    summaryTotal: string;
+    // Cultural / Localization fields for Social Proof
+    socialProofAction: string; // e.g., "ha appena acquistato"
+    socialProofFrom: string; // e.g., "da" or "a"
+    localizedCities: string[]; // List of real cities from that country
+    localizedNames: string[]; // List of real common names from that country
+    socialProofBadgeName: string; // The name for the "Michelle and 758 others" badge
+    // Delivery Timeline labels
+    timelineOrdered: string;
+    timelineReady: string;
+    timelineDelivered: string;
+}
+
+// FIX: Added OnlineUser interface for live map tracking across components
+export interface OnlineUser {
+    id: string;
+    lat?: number;
+    lon?: number;
+    city?: string;
+    country?: string;
+    ip?: string;
+    online_at: string;
+    action?: 'purchased';
+    pageUrl?: string;
+}
+
+export interface AnnouncementItem {
+  text: string;
+  icon?: string;
+  iconSize?: number;
+}
+
+export interface FinalOfferSection {
+  enabled: boolean;
+  title: string;
+  subtitle: string;
+  ctaText: string;
+  scarcityText: string;
+  price?: string;
+  originalPrice?: string;
+  bgClass?: string; // NEW: Background gradient class
+  bgColor?: string; // NEW: Background solid color
+}
+
+export interface GeneratedContent {
+  templateId?: TemplateId; 
+  language?: string; 
+  currency?: string; // Currency symbol (e.g. €, LEI, kr)
+  headline: string;
+  subheadline: string;
+  heroImagePrompt: string; 
+  heroImageBase64?: string; 
+  generatedImages?: string[]; 
+  
+  announcementBarText?: string; 
+  announcements?: AnnouncementItem[]; // NEW: Multiple announcements
+  announcementInterval?: number; // NEW: Interval in seconds
+  announcementFontSize?: number; // NEW: Font size in pixels
+  announcementBgColor?: string; // NEW: Background color for bar (solid)
+  announcementBgClass?: string; // NEW: Gradient class for bar
+  announcementTextColor?: string; // NEW: Text color for bar
+
+  stockConfig?: {
+    enabled: boolean;
+    quantity: number;
+    textOverride?: string; // Custom scarcity text i.e. "Only {x} left"
+  };
+  
+  socialProofConfig?: {
+      enabled: boolean;
+      intervalSeconds: number;
+      maxShows: number;
+  };
+
+  showFeatureIcons?: boolean;
+  showSocialProofBadge?: boolean; // NEW: Toggle for the "Michelle and 758 others" badge
+  showDeliveryTimeline?: boolean; // NEW: Toggle for delivery status timeline
+  socialProofCount?: number; // NEW: Count for social proof badge
+  socialProofBadgeConfig?: { // NEW: Customizable fields for the social proof badge
+      name?: string;
+      text?: string;
+      avatarUrls?: string[];
+  };
+
+  benefits: string[];
+  features: Array<{ title: string; description: string; image?: string; showCta?: boolean }>; 
+  reviewsPosition?: number; // Index to insert reviews after (undefined = bottom)
+
+  testimonial?: Testimonial; 
+  testimonials?: Testimonial[];
+
+  // NEW: Box Content (Cosa ricevi)
+  boxContent?: {
+      enabled: boolean;
+      title: string; // "Ordinando oggi ricevi:"
+      items: string[];
+      image?: string; // Optional custom image for the box
+  };
+
+  // NEW: Final Offer Section (after reviews)
+  bottomOffer?: FinalOfferSection;
+
+  ctaText: string;
+  ctaSubtext: string;
+  colorScheme: 'blue' | 'green' | 'red' | 'purple' | 'dark' | 'gold';
+  buttonColor?: string; // Custom CSS classes for button gradient/color
+  checkoutButtonColor?: string; // NEW: Custom color for order button
+  backgroundColor?: string; // NEW: Custom background color for the page body
+  niche: string;
+  
+  // Pricing & Offer
+  price?: string;
+  originalPrice?: string;
+  showDiscount?: boolean;
+  shippingCost?: string; // NEW: Costo spedizione
+  enableShippingCost?: boolean; // NEW: Toggle visibilità spedizione
+
+  // NEW: Shipping Insurance
+  insuranceConfig?: {
+    enabled: boolean;
+    label: string;
+    cost: string;
+    defaultChecked: boolean;
+  };
+  
+  // NEW: Gadget Add-on
+  gadgetConfig?: {
+    enabled: boolean;
+    label: string;
+    cost: string;
+    defaultChecked: boolean;
+  };
+
+  // Advanced Customization (PX)
+  priceStyles?: {
+      color?: string; // Hex color override for price
+      fontSize?: string; // PX size for price
+      className?: string; // NEW: Tailwind classes for gradients (i.e. bg-clip-text text-transparent bg-gradient-to-r from-...)
+  };
+  customTypography?: {
+      h1?: string; // PX size
+      h2?: string; // PX size
+      h3?: string; // PX size for Feature Titles
+      body?: string; // PX size
+      small?: string; // PX size for disclaimers/captions
+      cta?: string; // PX size for Buttons
+  };
+  
+  // Form Configuration
+  webhookUrl?: string;
+  formType?: 'classic' | 'html';
+  customFormHtml?: string;
+  htmlFormConfig?: { 
+    showName?: boolean;
+    showProductLine?: boolean;
+    showTotalLine?: boolean;
+  };
+
+  // Custom HTML Injection (Explicit Separation)
+  metaLandingHtml?: string;     // HTML for Meta on Landing Page
+  tiktokLandingHtml?: string;   // HTML for TikTok on Landing Page
+  metaThankYouHtml?: string;    // HTML for Meta on Thank You Page
+  tiktokThankYouHtml?: string;  // HTML for TikTok on Thank You Page
+  
+  // Legacy/Generic (kept for backward compatibility or extra scripts)
+  customHeadHtml?: string; 
+  customHeadHtml2?: string; // NEW: Second field for head scripts
+  customThankYouHtml?: string; 
+  customThankYouUrl?: string; // NEW: Full URL redirect override
+  thankYouImageLink?: string; // NEW: Link specifically for the hero image on TY page
+  
+  // NEW: Generic Extra HTML (for body/visual injection)
+  extraLandingHtml?: string;
+  extraThankYouHtml?: string;
+
+  formConfiguration?: FormFieldConfig[];
+
+  // Typography Customization
+  typography?: TypographyConfig;
+
+  // Full UI Translation Data
+  uiTranslation?: UiTranslation;
+
+  // Thank You Page Specifics
+  thankYouConfig?: {
+    enabled: boolean;
+    slugSuffix?: string; // e.g. "-grazie"
+  };
+
+  customFooterCopyrightText?: string; // NEW: Custom footer text
+}
+
+export interface LandingPageRow {
+  id: string;
+  created_at: string;
+  product_name: string;
+  slug?: string; // NEW: Custom URL slug
+  thank_you_slug?: string; // NEW: Thank you page slug
+  niche: string;
+  content: GeneratedContent;
+  thank_you_content?: GeneratedContent; // NEW: Independent content for thank you page
+  is_published: boolean;
+  // New columns for scripts
+  custom_head_html?: string;
+  custom_thankyou_html?: string;
+}

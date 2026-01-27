@@ -1,0 +1,13 @@
+# REGOLE DI SVILUPPO E PROMPT PERMANENTE
+
+1. **Traduzioni e Localizzazione**: Le pagine devono essere tradotte esattamente seguendo lo schema e i termini utilizzati attualmente nel sistema (definiti in `geminiService.ts` e `LandingPage.tsx`). Non alterare le stringhe di conversione ("Acquisto Verificato", "Solo {x} rimasti a magazzino", ecc.) in quanto ottimizzate per l'high-ticket/COD. **È mandatorio che queste stringhe siano sempre tradotte nella lingua target della pagina senza eccezioni.**
+2. **Integrità Estetica e Funzionale**: È ASSOLUTAMENTE VIETATO modificare il CSS (Tailwind), il layout o le funzionalità core esistenti (Autenticazione, Integrazione Gemini API, Supabase Storage, Tracciamento Mappe) che non siano oggetto specifico di una richiesta di aggiunta. **ASSOLUTAMENTE NON MODIFICARE NULLA NEL SITO CHE POTREBBE CAMBIARE ASPETTO O FUNZIONALITÀ, AGGIUNGI SOLO LE FUNZIONALITÀ RICHIESTE.**
+3. **Procedura di Modifica**: Per ogni prompt futuro, questo file deve essere riletto e le its direttive applicate rigorosamente.
+4. **Stile di Codice**: Mantenere l'approccio da senior engineer: codice pulito, modulare, tipizzato con TypeScript e performante.
+5. **Obbiettivo**: Il sito deve rimanere una piattaforma solida per la generazione di landing page affiliate con pagamento alla consegna (COD).
+6. **Ottimizzazione Egress Usage (Supabase)**: In ogni prompt, è prioritario garantire che le modifiche non aumentino inutilmente il consumo di banda in uscita ("Egress usage") di Supabase (limite 5GB). 
+   - Evitare assolutamente `select('*')` su tabelle con colonne JSON pesanti.
+   - Utilizzare il caricamento selettivo dei campi (`content->>'heroImageBase64'`) per le anteprime.
+   - Se una funzionalità richiesta dovesse comportare un rischio di aumento significativo dell'Egress (es. caricamento massivo di Base4), lo sviluppatore deve **obbligatoriamente fermarsi, chiedere conferma e spiegare tecnicamente perché è necessario** prima di procedere.
+7. **Obbligo di Traduzione per Nuove FunZionalità**: Qualsiasi nuova funzionalità o elemento aggiunto alla pagina generata deve essere obbligatoriamente integrato nel sistema di traduzione. Ogni nuova aggiunta deve essere sempre tradotta perfettamente quando si crea una pagina in una determinata lingua o quando si decide di duplicare una pagina esistente in una nuova lingua, garantendo una localizzazione coerente e professionale in tutto il funnel. **Nello specifico, non dimenticare mai di tradurre: "Solo {x} rimasti a magazzino" e "Acquisto Verificato".**
+8. **Vincolo Assoluto**: #ASSOLUTAMENTE NON MODIFICARE NULLA NEL SITO CHE POTEREBBE CAMBIARE ASPETTO O FUNZIONALITà, AGGIUNGI SOLO QUESTE FUNZIONALITà #
